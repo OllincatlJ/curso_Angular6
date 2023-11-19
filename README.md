@@ -1,1 +1,1 @@
-Intento de conectar repositorio
+repositorio creado para el curso de angular 6 donde se subira los ejercicios vistos
