@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /*	card	details	start	 */
+/*la importacion de los elementos css de bootstrap se realizao desde el archivo
+  angular.json ya que al importarlos por este archivo al compilarlo me arrojaba 
+  un error*/
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto+Condensed:400,400i,700,700i');
 
 section {
