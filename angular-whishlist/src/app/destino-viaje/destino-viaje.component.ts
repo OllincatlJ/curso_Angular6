@@ -11,6 +11,7 @@ import { DestinoViaje } from '../models/destino-viaje.model';
 })
 export class DestinoViajeComponent {
   @Input() destino: DestinoViaje= new DestinoViaje('','');
+  @Input('idx') position: number = -1;
   @HostBinding('attr.class') cssClass = 'col-md-4';
   @Output() clicked: EventEmitter<DestinoViaje>
 
