@@ -12,3 +12,4 @@ export class DestinoViaje {
         this.selected =s;
     }
 }
+
