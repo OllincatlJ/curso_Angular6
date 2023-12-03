@@ -4,6 +4,7 @@ import { DestinoViajeComponent } from '../destino-viaje/destino-viaje.component'
 import { DestinoViaje } from '../models/destino-viaje.model';
 import { FormDestinoViajeComponent } from '../form-destino-viaje/form-destino-viaje.component';
 //import { DestinosApiClient } from '../models/destinos-api-client.model';
+import { DestinosApiClientService } from '../models/destinos-api-client.service';
 
 
 @Component({
@@ -15,45 +16,59 @@ import { FormDestinoViajeComponent } from '../form-destino-viaje/form-destino-vi
 })
 
 export class ListaDestinosComponent {
-  destinos: DestinoViaje[];
-  //destinosApiClient: DestinosApiClient;
-
+  //destinos: DestinoViaje[];
   @Output() onItemAdded: EventEmitter<DestinoViaje>
+  updates: String[];
   
-  //constructor(public destinosApiClient: DestinosApiClient)
-  constructor(){
-    //this.destinosApiClient =new DestinosApiClient();
+/*  constructor(){
+    //Constructor utilizado antes del apiClient
     this.destinos = [];
     this.onItemAdded = new EventEmitter();
   }
 
-/*
+  agregado(d: DestinoViaje) {
+    //se utiliza para antes del ApiClient
+    this.destinos.push(d);
+  }
+  
+  elegido(d:DestinoViaje){
+    //Se utiliza para antes del ApiClient
+    this.destinos.forEach(x=>x.setSelected(false));
+    
+    d.setSelected(true);
+    
+    }
+   */ 
+
+    constructor(public destinosApiClient: DestinosApiClientService){
+      this.onItemAdded = new EventEmitter
+      this.updates = [];
+      this.destinosApiClient.subscribeOnChange((d: DestinoViaje) =>{
+        //la version nueva no acepta null como valor predeterminado asi que 
+        // la setencia if (d != null) no se puede utilizar
+        if (d.nombre.valueOf() != ''){
+          this.updates.push('Se ha elegido a ' + d.nombre)
+        }
+      });
+    }
+
+    agregado(d: DestinoViaje){
+      this.destinosApiClient.add(d);
+      this.onItemAdded.emit(d);
+    }
+
+    elegido(e: DestinoViaje){
+      this.destinosApiClient.elegir(e);
+    }
+
+
+
+    /*
   guardar(nombre:string, url:string):boolean {
     this.destinos.push(new DestinoViaje(nombre, url));
     //console.log(new DestinoViaje(nombre,url));
     //console.log(this.destinos);
     return false;
   }*/
-  agregado(d: DestinoViaje) {
-    this.destinos.push(d);
-    //this.destinosApiClient.add(d);
-    //this.onItemAdded.emit(d);
-  }
-  
-  elegido(d:DestinoViaje){
-    this.destinos.forEach(x=>x.setSelected(false));
-    
-    d.setSelected(true);
-    
-    }
-    
-/* 
-  elegido(e: DestinoViaje){
-    //desmarcar todos los demas en en array de elegidos
-    //this.destinos.forEach(function (x) {x.setSelected(false); });
-    //se marca el elegido
-    //d.setSelected(true);
-    this.destinosApiClient.getAll().forEach(x => x.setSelected(false));
-    e.setSelected(true);
-  }*/
+
 }
